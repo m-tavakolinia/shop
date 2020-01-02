@@ -1,6 +1,6 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 
 const firebaseConfig = {
     apiKey: "AIzaSyDY3ttA7yXb6O4XZ5HyQJ7xJ6VN4RyeTc8",
@@ -11,18 +11,18 @@ const firebaseConfig = {
     messagingSenderId: "575835656505",
     appId: "1:575835656505:web:c2951dfe39ed25c98f98e8",
     measurementId: "G-18BYNJ4ZS3"
-};
+}
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
-    if (!userAuth) return;
+    if (!userAuth) return
 
-    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    const userRef = firestore.doc(`users/${userAuth.uid}`)
 
-    const snapShot = await userRef.get();
+    const snapShot = await userRef.get()
 
     if (!snapShot.exists) {
-        const { displayName, email } = userAuth;
-        const createdAt = new Date();
+        const { displayName, email } = userAuth
+        const createdAt = new Date()
 
         try {
             await userRef.set({
@@ -33,20 +33,20 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
             })
         }
         catch (error) {
-            console.log('error creating user', error.message);
+            console.log('error creating user', error.message)
         }
     }
 
-    return userRef;
+    return userRef
 }
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig)
 
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+export const auth = firebase.auth()
+export const firestore = firebase.firestore()
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+const provider = new firebase.auth.GoogleAuthProvider()
+provider.setCustomParameters({ prompt: 'select_account' })
+export const signInWithGoogle = () => auth.signInWithPopup(provider)
 
-export default firebase;
+export default firebase
